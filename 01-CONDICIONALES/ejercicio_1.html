@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    let a = Number(prompt("Ingrese el valor de a diferente de 0"))
+    let b = Number(prompt("Ingrese el valor de b"))
+    let c = Number(prompt("Ingrese el valor de c"))
+
+    let discrimante = b**2 - 4*a*c
+
+    if (a !== 0){
+        console.log(`a es diferente de cero`)
+        if (discrimante > 0) {
+            let x1 = (-b + Math.sqrt(discrimante)) / (2 * a)
+
+            alert(`El valor de x1 es ${x1}`)
+
+            let x2 = (-b - Math.sqrt(discrimante)) / (2 * a)
+
+            alert(`El valor de x2 es ${x2}`)
+
+        } else{
+            alert("Los datos que ingresaste son invalidos")
+        }
+    } else{
+        alert("El valor de a debe ser diferente de cero")
+    }
+
+</script>
+</html>

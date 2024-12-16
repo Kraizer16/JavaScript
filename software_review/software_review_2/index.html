@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review</title>
+  </head>
+  <body></body>
+  <script>
+    //     A) 3 chicos de 23 años perfectamente normales entran a una heladería a comprar un helado pero hay un problema: los precios no están al lado de cada estante con su respectivo helado.
+
+    // Ellos quieren comprar el helado más caro que puedan con la plata que tienen, así que… veamos cómo podemos ayudarlos.
+
+    // - Roberto tiene $1.5 USD
+    // - Pedro tiene $1.7 USD
+    // - Cofla tiene $3 USD
+
+    // Los precios de helados son los siguientes:
+    // - Palito de helado de agua: $0.6 USD
+    // - Palito de helado de crema: $1.1 USD
+    // - Bombón helado marca Heladix: $1.6 USD
+    // - Bombón helado marca Heladovich: $1.7 USD
+    // - Bombón helado marca Helardo: $1.8 USD
+    // - Potecito de helado con confites: $2.9 USD
+    // - Pote de 1/4 KG -> $2.9 USD
+
+    // CREAR SOLUCIONES:
+
+    // - Pedirles que ingresen el monto que tienen y mostrarles el helado más caro que pueden comprar.
+    // - Si hay 2 o más con el mismo precio, mostrar ambos.
+    // - Cofla quiere saber cuánto es el vuelto.
+
+    let roberto = 1.5;
+
+    let pedro = 1.7;
+
+    let cofla = 3;
+
+    let hAgua = 0.6;
+
+    let hCrema = 1.1;
+
+    let heladix = 1.6;
+
+    let heladovich = 1.7;
+
+    let helardo = 1.8;
+
+    let confites = 2.9;
+
+    let pote = 2.9;
+
+    let pregunta = Number(prompt("Cuanto dinero tienes?"));
+
+    if (pregunta >= hCrema && pregunta < heladix) {
+      alert(`Puedes comprar helado de crema y te sobra ${pregunta - hCrema}`);
+    } else if (pregunta >= heladix && pregunta < confites) {
+      alert(`Puedes comprar heladixy y te sobra: ${pregunta - heladix}`);
+    } else if (pregunta >= confites && pregunta >= pote) {
+      alert(
+        `Puedes comprar confites y pote y te sobra: ${
+          pregunta - confites
+        }$ si compras confites o ${pregunta - pote}$ si compras pote`
+      );
+    }
+  </script>
+</html>

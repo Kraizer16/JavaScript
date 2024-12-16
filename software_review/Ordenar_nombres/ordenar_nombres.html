@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordenar Nombres</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">Ordenar Nombres</h1>
+    <form id="formulario" class="space-y-4">
+      <div>
+        <label for="nombres" class="block text-gray-700 font-medium">Ingrese su nombre:</label>
+        <textarea
+          id="nombres"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows="4"
+          placeholder="Ejemplo: Juan"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        id="btnOrdenar"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+      >
+        Ordenar Nombres
+      </button>
+    </form>
+    <div id="resultado" class="mt-4 text-center text-gray-800"></div>
+  </div>
+  <script>
+    nombresArray = []
+    document.getElementById('formulario').addEventListener('submit', () => {
+    event.preventDefault();
+
+    const inputNombres = document.getElementById('nombres').value;
+    const resultado = document.getElementById('resultado');
+
+    if (!inputNombres.trim()) {
+        resultado.textContent = 'Por favor, ingresa un Nombre.';
+        return;
+    }
+    nombresArray.push(inputNombres)
+    console.log(nombresArray)
+    const nombresOrdenados = nombresArray.sort((a, b) => a.localeCompare(b, 'es'));
+
+    resultado.innerHTML = `
+        <p class="text-lg font-medium">Nombres ordenados:</p>
+        ${nombresOrdenados}
+    `;
+    });
+  </script>
+</body>
+</html>

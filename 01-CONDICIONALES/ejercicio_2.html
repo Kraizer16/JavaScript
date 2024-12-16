@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let fecha = prompt("Ingrese la fecha en formato xx/xx/xxxx")
+    if (fecha.length === 10) {
+        if (fecha[2] === "/" &&  fecha[5] === "/"){
+
+            let dia = parseInt(fecha.slice(0,2))
+            let mes = parseInt(fecha.slice(3,5))
+            let año = parseInt(fecha.slice(6,10))
+
+            console.log(dia)
+            console.log(mes)
+            console.log(año)
+
+            if (dia <= 31 && mes <=12 && año <= 2024) {
+
+                alert(fecha)
+            }
+            else{
+                alert("La fecha es incorrecta")
+            }
+        }
+        else{
+            alert("fecha Invalida")
+        }
+    } 
+    else{
+        alert("Formato Invalido")
+    }
+</script>
+</html>

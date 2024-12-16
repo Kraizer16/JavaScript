@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obtener datos de un formulario</title>
+</head>
+<body>
+    <h1>Obtener datos de un formulario</h1>
+
+    <form action="" onsubmit="return false" id="formu" >
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre">
+        <br><br>
+        <label for="edad">Edad: </label>
+        <input type="number" name="edad" id="edad">
+        <button onclick="obtenerDatos()">Enviar</button>
+    </form>
+</body>
+<script>
+    function obtenerDatos() {
+        const formu = document.forms["formu"];
+        // let nombre = formu["nombre"].value;
+        // let edad = formu["edad"].value;
+
+        // alert(nombre + " " + edad);
+
+        // Objeto FormData
+
+        const datosFormu = new FormData(formu);
+        datosFormu.forEach((k, v) => console.log(k + " -> " + v));
+
+        const objFormu = Object.fromEntries(datosFormu.entries());
+        const serialform = JSON.stringify(objFormu);
+        
+        console.log(serialform)
+    }
+
+    const fData = new FormData();
+    
+    // Agregar datos al formData
+    fData.append("David", 20);
+    fData.append("Jenny", 15);
+    for(const [llave, valor] of fData) {
+        console.log(llave + " : " + valor)
+    }
+
+    // formData.has("key") -> true | false si esta la llave en el formData
+    // formData.delete("key") -> elimina la llave, valor si existe
+    // formData.get("key") -> devuelve el valor de una llave
+    // formData.getAll() -> Obtiene todos los [key, value]
+
+    fData.getAll()
+</script>
+</html>

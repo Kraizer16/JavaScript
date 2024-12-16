@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      button {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: darkblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <form action="" id="formu">
+        <label for="nombre">Nombre del cliente:</label>
+        <br /><br />
+        <input type="text" id="nombre" />
+        <br /><br />
+        <label for="opciones">Material de la caja:</label>
+        <br /><br />
+        <select id="opciones" name="opciones">
+          <option value="Plastico">Plastico</option>
+          <option value="Carton">Carton</option>
+          <option value="Metal">Metal</option>
+        </select>
+        <br /><br />
+        <label for="dimensiones"
+          >Seleccione unas dimensiones para la caja:</label
+        >
+        <br /><br />
+        <input
+          type="checkbox"
+          name="rBtn"
+          id="diminutas"
+          value="Diminutas"
+        />Diminutas <br /><br />
+        <input
+          type="checkbox"
+          name="rBtn"
+          id="medianas"
+          value="Medianas"
+        />Medianas <br /><br />
+        <input
+          type="checkbox"
+          name="rBtn"
+          id="grandes"
+          value="Grandes"
+        />Grandes <br /><br />
+        <p>Comentarios:</p>
+        <textarea
+          name="comentarios"
+          id="comentarios"
+          placeholder="Agrega una indicacion adicional"
+        ></textarea>
+        <br /><br />
+        <p id="alerta"></p>
+        <br />
+        <button type="submit" id="btn">Enviar</button>
+        <br /><br />
+        <textarea name="resultado" id="resultado"></textarea>
+      </form>
+    </div>
+    <script>
+      let nombres = [];
+      const formu = document.getElementById("formu");
+
+      formu.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const nom = document.getElementById("nombre").value.trim();
+        const material = document.querySelector("#opciones").value;
+        const tamaño = document.querySelector("[name=rBtn]:checked")?.value;
+        const comentarios = document.getElementById("comentarios").value;
+        const final = document.getElementById("resultado");
+        const alerta = document.getElementById("alerta");
+
+        if (tamaño == null) {
+          msg = "Debes escoger un tamaño";
+          alerta.innerHTML = msg;
+        } else {
+          let resultado = `${nom} ha pedido una caja de ${material} con unas dimensiones ${tamaño}. ${comentarios}`;
+          final.value += resultado;
+
+          document.getElementById("nombre").value = "";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectura de archivo con Promesa</title>
+</head>
+<body>
+    <h1>Lectura de un archivo usando promesas</h1>
+    <hr>
+
+    <input type="file" name="selfile" id="selfil" onclick="leerArchivo()">
+</body>
+<script>
+    function leerArchivo() {
+        alert("Vamos bien!!!");
+        const archivo = document.childNodes[2].files[0];
+        console.log("archivo seleccionado: " + archivo);
+    }
+
+    document.getElementById("selfile").addEventListener("change", (evento) => {
+        const archivo = evento.target.files[0];
+        console.log("archivo seleccionado: " + archivo);
+    })
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Membresias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col items-center py-6">
+    <header>
+      <h1 class="text-3xl font-bold text-blue-600 mb-6">
+        Gestión de Membresias
+      </h1>
+    </header>
+    <main class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Registrar Cliente</h2>
+        <form id="form-registrar">
+          <div class="mb-4">
+            <label for="nombre" class="block text-gray-700">Nombre:</label>
+            <input
+              id="nombre"
+              type="text"
+              class="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="fecha-inscripcion" class="block text-gray-700"
+              >Fecha de inscripcion:</label
+            >
+            <input
+              id="fecha-inscripcion"
+              type="date"
+              class="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="duracion" class="block text-gray-700"
+              >Duracion (dias):</label
+            >
+            <input
+              id="duracion"
+              type="number"
+              class="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Registrar
+          </button>
+        </form>
+        <p id="mensaje-registrar" class="text-green-600 mt-4"></p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+          Verificar Membresia
+        </h2>
+        <form id="form-verificar">
+          <div class="mb-4">
+            <label for="nombre-verificar" class="block text-gray-700"
+              >Nombre del cliente:</label
+            >
+            <input
+              id="nombre-verificar"
+              type="text"
+              class="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Verificar
+          </button>
+        </form>
+        <p id="mensaje-verificar" class="text-blue-600 mt-4"></p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Clientes Activos</h2>
+        <button
+          id="mostrar-clientes"
+          class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+        >
+          Mostrar Clientes Activos
+        </button>
+        <ul id="clientes-activos" class="list-disc pl-5 mt-4 hidden"></ul>
+      </div>
+    </main>
+    <script src="./js/app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+console.log(`A [ENVIADO DE: ${index}]`) 

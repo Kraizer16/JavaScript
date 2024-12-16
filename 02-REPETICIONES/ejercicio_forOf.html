@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejemplo de Estructura for .. of</h1>
+</body>
+<script>
+    let str = "Campus Lands"
+
+
+    // Recorrer la cadena con for
+
+    for(let i=0; i < str.length; i++) {
+        let letra = str[i];
+        if (letra === "a") continue;
+        document.write(letra);
+
+    }
+
+    // Recorrer la cadena con for .. of
+    // for (let letra of str) {
+    //     document.write(letra)
+    // }
+
+
+</script>
+</html>

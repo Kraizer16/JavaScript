@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Temperatura - Trabajo Clase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">Conversor de Temperatura</h1>
+    <form id="formulario" class="space-y-4">
+
+      <div>
+        <label for="celsius" class="block text-gray-700 font-medium">Grados Celsius:</label>
+        <input
+          type="number"
+          id="celsius"
+          placeholder="Ejemplo: 30"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <button
+        type="button"
+        id="convertToFahrenheit"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+      >
+        Convertir a Fahrenheit
+      </button>
+
+      <div>
+        <label for="fahrenheit" class="block text-gray-700 font-medium">Grados Fahrenheit:</label>
+        <input
+          type="number"
+          id="fahrenheit"
+          placeholder="Ejemplo: 86"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <button
+        type="button"
+        id="convertToCelsius"
+        class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+      >
+        Convertir a Celsius
+      </button>
+    </form>
+    <div id="resultado" class="mt-4 text-center text-gray-800 text-lg"></div>
+  </div>
+  <script>
+    document.getElementById("convertToFahrenheit").addEventListener("click", () => {
+    const celsius = parseFloat(document.getElementById("celsius").value);
+    const resultado = document.getElementById("resultado");
+
+    if ((!celsius)) {
+        resultado.textContent = "Por favor, ingresa un valor válido en Celsius.";
+        return;
+    }
+
+    const fahrenheit = (celsius * 9) / 5 + 32;
+    resultado.textContent = `${celsius} °C equivalen a ${fahrenheit.toFixed(2)} °F.`;
+    });
+
+    document.getElementById("convertToCelsius").addEventListener("click", () => {
+    const fahrenheit = parseFloat(document.getElementById("fahrenheit").value);
+    const resultado = document.getElementById("resultado");
+
+    if ((!fahrenheit)) {
+        resultado.textContent = "Por favor, ingresa un valor válido en Fahrenheit.";
+        return;
+    }
+
+    const celsius = ((fahrenheit - 32) * 5) / 9;
+    resultado.textContent = `${fahrenheit} °F equivalen a ${celsius.toFixed(2)} °C.`;
+    });
+
+  </script>
+</body>
+</html>

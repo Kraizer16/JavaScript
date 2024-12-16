@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+initial-scale=1.0"
+    />
+    <title>Generador random de personas</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      #principal {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      #principal div {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      #principal div:hover {
+        transform: translateY(-5px);
+      }
+
+      #principal img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      #principal h2 {
+        font-size: 1.2rem;
+        margin: 10px 0;
+        font-weight: bold;
+      }
+
+      #principal h3 {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+      }
+      img{
+        border-radius: 50%;
+        width: 40%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Personajes</h1>
+    <main id="principal"></main>
+    <script>
+        function random(array, elemHtml) {
+  let personasImprimir = [];
+  let contPersonas = "";
+  for (let i = 0; i < 4; i++) {
+    let numeroRandom = Math.floor(Math.random() * 5001);
+    let persona = array[numeroRandom];
+    personasImprimir.push(persona);
+  }
+  console.log(personasImprimir);
+  for (const persona of personasImprimir) {
+    console.log(persona);
+    contPersonas += `<div>
+    <h2>${persona.name.title} ${persona.name.first} ${persona.name.last}</h2>
+        <img src=${persona.picture.large}>
+        <ul>
+        <li>${persona.email}</li>
+        <li>${persona.cell}</li>
+        <li>${persona.dob.age}</li>
+        <li>${persona.gender}</li>
+        <li>${persona.location.city}</li>
+        <li>${persona.nat}</li>
+        </ul>
+        </div>`;
+  }
+  elemHtml.innerHTML = contPersonas;
+}
+
+function accederPersonajes(elemHtml) {
+  console.log("Funcion mostrarJSON");
+  fetch("https://randomuser.me/api/?results=5000")
+    .then((respuesta) => respuesta.json())
+    .then((datos) => {
+      random(datos.results, elemHtml);
+    })
+    .catch((error) =>
+      console.error("Error en el consumo del JSON", error.message)
+    )
+    .finally(() => console.log("Se ha consumido todo el JSON"));
+}
+
+const final = document.getElementById("principal");
+accederPersonajes(final);
+    </script>
+  </body>
+</html>
