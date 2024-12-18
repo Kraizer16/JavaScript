@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Cambiar Color</button>
+</body>
+<script>
+    const cuerpo = document.querySelector("body")
+    const boton = document.querySelector("button")
+    function colorAleatorio() {
+        const letras = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letras[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    function cambiarColor() {
+        cuerpo.style.backgroundColor = colorAleatorio();    
+    }
+
+    boton.addEventListener("click", cambiarColor)
+
+</script>
+
+</html>

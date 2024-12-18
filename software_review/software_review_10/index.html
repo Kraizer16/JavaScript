@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-100 flex justify-center items-center min-h-screen">
+
+    <div class="bg-white shadow-lg rounded-lg p-6 w-72">
+        <div id="display" class="bg-gray-800 text-white text-right p-4 rounded mb-4 text-3xl font-mono">
+            0
+        </div>
+
+        <div class="grid grid-cols-4 gap-2">
+            <button class="btn-clear bg-gray-300 p-4 rounded text-xl font-bold">C</button>
+            <button class="btn-delete bg-gray-300 p-4 rounded text-xl font-bold">←</button>
+            <button class="btn-operator bg-gray-300 p-4 rounded text-xl font-bold">÷</button>
+            <button class="btn-operator bg-orange-500 text-white p-4 rounded text-xl font-bold">×</button>
+            
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">7</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">8</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">9</button>
+            <button class="btn-operator bg-orange-500 text-white p-4 rounded text-xl font-bold">-</button>
+
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">4</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">5</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">6</button>
+            <button class="btn-operator bg-orange-500 text-white p-4 rounded text-xl font-bold">+</button>
+
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">1</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">2</button>
+            <button class="btn-number bg-gray-200 p-4 rounded text-xl">3</button>
+            <button class="btn-decimal bg-gray-300 p-4 rounded text-xl font-bold">.</button>
+
+            <button class="btn-number col-span-2 bg-gray-200 p-4 rounded text-xl">0</button>
+            <button class="btn-equal col-span-2 bg-orange-500 text-white p-4 rounded text-xl font-bold">=</button>
+        </div>
+    </div>
+
+    <script>
+        const pantalla = document.getElementById('display'); 
+        let valorActual = ''; 
+    
+        const botones = {
+            limpiar: document.querySelector('.btn-clear'),
+            borrar: document.querySelector('.btn-delete'),
+            igual: document.querySelector('.btn-equal'),
+            decimal: document.querySelector('.btn-decimal'),
+            numeros: document.querySelectorAll('.btn-number'),
+            operadores: document.querySelectorAll('.btn-operator')
+        };
+    
+        function actualizarPantalla(valor) {
+            pantalla.textContent = valor || '0'; 
+        }
+    
+        botones.numeros.forEach(boton => {
+            boton.addEventListener('click', () => {
+                if (valorActual === '0') valorActual = ''; 
+                valorActual += boton.textContent; 
+                actualizarPantalla(valorActual); 
+            });
+        });
+    
+        botones.operadores.forEach(boton => {
+            boton.addEventListener('click', () => {
+                const ultimoCaracter = valorActual.slice(-1); 
+                if (['+', '-', '×', '÷'].includes(ultimoCaracter)) {
+                    valorActual = valorActual.slice(0, -1); 
+                }
+                valorActual += convertirOperador(boton.textContent); 
+                actualizarPantalla(valorActual); 
+            });
+        });
+    
+        botones.limpiar.addEventListener('click', () => {
+            valorActual = ''; 
+            actualizarPantalla(valorActual); 
+        });
+    
+        botones.borrar.addEventListener('click', () => {
+            valorActual = valorActual.slice(0, -1); 
+            actualizarPantalla(valorActual); 
+        });
+    
+        botones.decimal.addEventListener('click', () => {
+            const partes = valorActual.split(/[\+\-\×\÷]/); 
+            if (!partes[partes.length - 1].includes('.')) { 
+                valorActual += '.'; 
+                actualizarPantalla(valorActual); 
+            }
+        });
+    
+        botones.igual.addEventListener('click', () => {
+            try {
+                const expresion = valorActual.replace(/×/, '*').replace(/÷/, '/'); 
+                valorActual = eval(expresion).toString(); 
+                actualizarPantalla(valorActual); 
+            } catch {
+                valorActual = ''; 
+                actualizarPantalla('Error'); 
+            }
+        });
+    
+        function convertirOperador(operador) {
+            switch (operador) {
+                case '÷': return '/'; 
+                case '×': return '*'; 
+                default: return operador; 
+            }
+        }
+    </script>
+    
+
+</body>
+</html>
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-yellow-400 p-7 rounded-lg shadow-lg flex flex-col items-center">
+        <h1 class="m-4 text-lg font-medium">Ejemplo Eventos JS - Aumentar y Disminuir</h1>
+        <h1 class="text-center text-xl font-bold mb-6" id="contador">Contador: 0</h1>
+        <div class="space-x-4">
+            <button id="number1" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Aumentar</button>
+            <button id="number2" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Disminuir</button>
+        </div>
+    </div>
+
+    <script>
+        const boton1 = document.getElementById("number1");
+        const boton2 = document.getElementById("number2");
+        const sumatoria = document.getElementById("contador");
+
+        let contador = 0;
+
+        function actualizarContador() {
+            sumatoria.innerHTML = `Contador: ${contador}`;
+        }
+
+        boton1.addEventListener("click", () => {
+            contador++;
+            actualizarContador();
+        });
+
+        boton2.addEventListener("click", () => {
+            if (contador > 0) {
+                contador--;
+                actualizarContador();
+            }
+        });
+    </script>
+</body>
+</html>

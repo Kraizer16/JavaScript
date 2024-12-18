@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuadrado Aleatorio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+  <div id="cuadrado" class="absolute w-24 h-24" style="border-width: 2px;"></div>
+
+  <script>
+    const cuadrado = document.getElementById('cuadrado');
+
+    function colorAleatorio() {
+      const letras = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letras[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function moverCuadrado() {
+      const maxX = window.innerWidth - cuadrado.offsetWidth;
+      const maxY = window.innerHeight - cuadrado.offsetHeight;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      cuadrado.style.left = `${x}px`;
+      cuadrado.style.top = `${y}px`;
+      cuadrado.style.backgroundColor = colorAleatorio();
+    }
+
+    moverCuadrado();
+
+    cuadrado.addEventListener('mouseover', moverCuadrado);
+  </script>
+</body>
+</html>
