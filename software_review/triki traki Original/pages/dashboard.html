@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div id="jugador1">
+            <h1>Jugador #1</h1>
+            <p id="nombre1"></p>
+            <p id="puntos1"></p>
+        </div>
+        <div class="tic">
+            <h1 id="titulo">TIC TAC TOE</h1>
+            <div class="cuadro" id="uno"></div>
+            <div class="cuadro" id="dos"></div>
+            <div class="cuadro" id="tres"></div>
+            <div class="cuadro" id="cuatro"></div>
+            <div class="cuadro" id="cinco"></div>
+            <div class="cuadro" id="seis"></div>
+            <div class="cuadro" id="siete"></div>
+            <div class="cuadro" id="ocho"></div>
+            <div class="cuadro" id="nueve"></div>
+            <button id="cerrarSesion" class="boton">Cerrar Sesión</button>
+
+        </div>
+        <div id="jugador2">
+            <h1>Jugador #2</h1>
+            <p id="nombre2"></p>
+            <p id="puntos2"></p>
+
+        </div>
+    </div>
+</body>
+<script>
+    const name1 = document.querySelector("#nombre1");
+    const name2 = document.querySelector("#nombre2");
+    const puntuacion1 = document.querySelector("#puntos1");
+    const puntuacion2 = document.querySelector("#puntos2");
+    const turno1 = document.getElementById("jugador1");
+    const turno2 = document.getElementById("jugador2");
+    const botones = {
+        celdas: document.querySelectorAll(".cuadro")
+    };
+
+    let usuario1 = sessionStorage.getItem("usuarioActual_#1");
+    let usuario2 = sessionStorage.getItem("usuarioActual_#2");
+    let paginaAnterior = sessionStorage.getItem("paginaAnterior");
+
+    if (!usuario1 || !usuario2) {
+        alert("Error: Usuarios no encontrados.");
+        window.location.href = paginaAnterior || "index.html";
+    }
+
+    // Obtener puntuaciones del localStorage o inicializar en 0
+    let contadorPuntos1 = parseInt(localStorage.getItem(`Puntuacion_${usuario1}`)) || 0;
+    let contadorPuntos2 = parseInt(localStorage.getItem(`Puntuacion_${usuario2}`)) || 0;
+
+    // Mostrar nombres y puntuaciones
+    name1.textContent = `${usuario1}`;
+    name2.textContent = `${usuario2}`;
+    puntuacion1.textContent = `Puntos ${contadorPuntos1}`;
+    puntuacion2.textContent = `Puntos ${contadorPuntos2}`;
+
+    document.getElementById("cerrarSesion").addEventListener("click", () => {
+        sessionStorage.removeItem("usuarioActual_#1");
+        sessionStorage.removeItem("usuarioActual_#2");
+        document.getElementById("cerrarSesion").textContent =
+            "Sesión eliminada, volverá a inicio en 2 segundos";
+        sleep(2000).then(() => window.location.href = paginaAnterior || "index.html");
+    });
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const combinacionesGanadoras = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    function verificarGanador() {
+        for (let combinacion of combinacionesGanadoras) {
+            const [a, b, c] = combinacion;
+            const valorA = botones.celdas[a].textContent;
+            const valorB = botones.celdas[b].textContent;
+            const valorC = botones.celdas[c].textContent;
+            if (valorA !== "" && valorA === valorB && valorA === valorC) {
+                return valorA;
+            }
+        }
+        return null;
+    }
+
+    function actualizarPuntuaciones(valor1, valor2) {
+        puntuacion1.textContent = `Puntos ${valor1}`;
+        puntuacion2.textContent = `Puntos ${valor2}`;
+        localStorage.setItem(`Puntuacion_${usuario1}`, valor1);
+        localStorage.setItem(`Puntuacion_${usuario2}`, valor2);
+    }
+
+    let contador = 0;
+
+    botones.celdas.forEach(boton => {
+        boton.addEventListener("click", (evento) => {
+            if (evento.target.textContent !== "") {
+                return;
+            }
+
+            contador++;
+            if (contador % 2 === 0) {
+                turno1.style.border = "solid 2px black";
+                turno2.style.border = "";
+                evento.target.textContent = "o";
+            } else {
+                evento.target.textContent = "x";
+                turno2.style.border = "solid 2px black";
+                turno1.style.border = "hidden";
+            }
+
+            const ganador = verificarGanador();
+            if (ganador) {
+                let jugadorGanador = ganador === "x" ? usuario1 : usuario2;
+                setTimeout(() => {
+                    alert(`¡Jugador "${jugadorGanador}" ha ganado el juego!`);
+                    if (jugadorGanador === usuario1) {
+                        contadorPuntos1 += 5;
+                        contadorPuntos2 -= 2;
+                    } else {
+                        contadorPuntos2 += 5;
+                        contadorPuntos1 -= 2;
+                    }
+                    actualizarPuntuaciones(contadorPuntos1, contadorPuntos2);
+                    location.reload();
+                }, 100);
+            } else if (contador === 9) { // Empate
+                setTimeout(() => {
+                    alert("¡Empate!");
+                    contadorPuntos1 += 3;
+                    contadorPuntos2 += 3;
+                    actualizarPuntuaciones(contadorPuntos1, contadorPuntos2);
+                    location.reload();
+                }, 100);
+            }
+        });
+    });
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>BIENVENIDO AL JUEGO TIC TAC TOE</h1>
+      <h1>Registro de jugadores</h1>
+      <form id="formularioLogin" class="formulario">
+        <label for="nombreUsuario1">Nombre de Usuario #1:</label>
+        <input
+          type="text"
+          id="nombreUsuario1"
+          placeholder="Ingresa tu nombre"
+          required
+        />
+        <label for="nombreUsuario2">Nombre de Usuario #2:</label>
+        <input
+          type="text"
+          id="nombreUsuario2"
+          placeholder="Ingresa tu nombre"
+          required
+        />
+        <button type="submit" class="boton">Ingresar</button>
+
+      </form>
+      <br><br>
+      <button id="btnClases" class="boton">Consulta de informacion</button>
+      <p id="parrafo"></p>
+    </div>
+
+    <script>
+      const formu = document.getElementById("formularioLogin");
+      formu.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const nomUsu1 = document.getElementById("nombreUsuario1").value.trim();
+        const nomUsu2 = document.getElementById("nombreUsuario2").value.trim();
+        if ((nomUsu1) && (nomUsu2)) {
+          sessionStorage.setItem("usuarioActual_#1", nomUsu1);
+          sessionStorage.setItem("usuarioActual_#2", nomUsu2);
+          sessionStorage.setItem("paginaAnterior", window.location.href);
+          window.location.href = "pages/dashboard.html"
+        } else{
+          alert("Error. Usuario inválido.")
+        }
+      });
+      
+      document.getElementById("btnClases").addEventListener("click", () => {
+        // const lstClases = document.querySelector(".contenedor").classList;
+        // const cantClases = lstClases.length
+        // alert(cantClases + " : " + lstClases)
+        
+        // // Agrega un estilo al elemento
+        // lstClases.add("sombra");
+
+
+        // // True si la clase esta en la lista de clases del elemento
+        // alert(lstClases.contains("sombra"));
+
+        // // Remueve un estilo del elemento
+        // lstClases.remove("sombra");
+
+        // // toogle(clase) ; se agrega la clase si no esta en el elemento
+        // lstClases.toggle("sombra");
+
+        // alert(cantClases + " : " + lstClases)
+
+        // // replace (old, new) reemplaza la clase old por la clase new
+        // lstClases.replace("sombra", "sombra2")
+
+        // const lstattr = document.querySelector(".contenedor").attributes;
+        // for (let atrr of lstattr)
+        //   alert(`${atrr.name}: ${atrr.value}`)
+
+        // nodeName : devuelve el nombre del nodo
+        alert(document.querySelector("#nombreUsuario").nodeName)
+
+        // textContent obtiene o modifica el texto de la etiqueta
+
+        // innerHTML: inserta HTML en la etiqueta
+
+        // outerText
+        alert(document.querySelector(".contenedor").outerHTML)
+
+        // setHTML : agrega HTML a la etiqueta de forma segura. Evita la inyección
+        // html malicioso: que no tenga JS
+
+        document.getElementById("parrafo").innerHTML =' \
+        <script> \
+          alert("soy malicioso"); \
+          <\/script> '
+      })
+    </script>
+  </body>
+</html>

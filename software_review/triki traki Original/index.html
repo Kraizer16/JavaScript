@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio de Sesión</title>
+  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="contenedor">
+    <h1>BIENVENIDO AL JUEGO TIC TAC TOE</h1>
+    <h1>Registro de jugadores</h1>
+    <form id="formularioLogin" class="formulario">
+      <label for="nombreUsuario1">Nombre de Usuario #1:</label>
+      <input type="text" id="nombreUsuario1" placeholder="Ingresa tu nombre" required />
+      <label for="nombreUsuario2">Nombre de Usuario #2:</label>
+      <input type="text" id="nombreUsuario2" placeholder="Ingresa tu nombre" required />
+      <button type="submit" class="boton">Comenzar el juego</button>
+    </form>
+    <br><br>
+    <h2>Consulta de puntuaciones</h2>
+    <br>
+    <input type="text" id="buscador" placeholder="Ingresa el nombre del usuario" />
+    <button id="btnBuscar" class="boton">Buscar puntuación</button>
+    <p id="resultadoBusqueda"></p>
+    <br><br><br>
+    <h2>Tabla histórica de puntuaciones</h2>
+    <br>
+    <table id="tablaPuntuaciones" border="1">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Puntuación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se llenarán las puntuaciones dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const formu = document.getElementById("formularioLogin");
+    formu.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const nomUsu1 = document.getElementById("nombreUsuario1").value.trim();
+      const nomUsu2 = document.getElementById("nombreUsuario2").value.trim();
+      if ((nomUsu1) && (nomUsu2)) {
+        sessionStorage.setItem("usuarioActual_#1", nomUsu1);
+        sessionStorage.setItem("usuarioActual_#2", nomUsu2);
+        sessionStorage.setItem("paginaAnterior", window.location.href);
+        window.location.href = "pages/dashboard.html";
+      } else {
+        alert("Error. Usuario inválido.");
+      }
+    });
+
+// Función para mostrar la tabla histórica de puntuaciones
+function mostrarTablaPuntuaciones() {
+  const tbody = document.getElementById("tablaPuntuaciones").querySelector("tbody");
+  tbody.innerHTML = ""; // Limpiar la tabla antes de rellenarla
+
+  // Obtener todas las puntuaciones almacenadas
+  const puntuaciones = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const clave = localStorage.key(i);
+    const valor = localStorage.getItem(clave);
+
+    if (clave.startsWith("Puntuacion")) {
+      puntuaciones.push({
+        usuario: clave.replace("Puntuacion ", ""),
+        puntuacion: parseInt(valor) // Convertir el valor a un número entero
+      });
+    }
+  }
+
+  // Ordenar las puntuaciones de mayor a menor
+  puntuaciones.sort((a, b) => b.puntuacion - a.puntuacion);
+
+  // Mostrar solo las 3 primeras puntuaciones
+  for (let i = 0; i < Math.min(3, puntuaciones.length); i++) {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${puntuaciones[i].usuario}</td><td>${puntuaciones[i].puntuacion}</td>`;
+    tbody.appendChild(fila);
+  }
+}
+
+    // Función para buscar la puntuación de un usuario
+    function buscarPuntuacion() {
+      const buscador = document.getElementById("buscador").value.trim();
+      const resultadoBusqueda = document.getElementById("resultadoBusqueda");
+
+      if (!buscador) {
+        resultadoBusqueda.textContent = "Por favor, ingresa un nombre de usuario.";
+        return;
+      }
+
+      const clave = `Puntuacion_${buscador}`;
+      const puntuacion = localStorage.getItem(clave);
+
+      if (puntuacion) {
+        resultadoBusqueda.textContent = `El usuario "${buscador}" tiene una puntuación de: ${puntuacion}.`;
+      } else {
+        resultadoBusqueda.textContent = `No se encontró ninguna puntuación para el usuario "${buscador}".`;
+      }
+    }
+
+    // Eventos para los botones
+    document.getElementById("btnBuscar").addEventListener("click", buscarPuntuacion);
+    document.addEventListener("DOMContentLoaded", mostrarTablaPuntuaciones); // Mostrar la tabla al cargar la página
+
+  </script>
+</body>
+
+</html>

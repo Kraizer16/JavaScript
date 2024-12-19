@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div id="jugador1">
+            <h1>Jugador #1</h1>
+            <p id="mensajeBienvenida1"></p>
+        </div>
+        <div class="tic">
+            <h1 id="titulo">TIC TAC TOE</h1>
+            <div class="cuadro" id="uno"></div>
+            <div class="cuadro" id="dos"></div>
+            <div class="cuadro" id="tres"></div>
+            <div class="cuadro" id="cuatro"></div>
+            <div class="cuadro" id="cinco"></div>
+            <div class="cuadro" id="seis"></div>
+            <div class="cuadro" id="siete"></div>
+            <div class="cuadro" id="ocho"></div>
+            <div class="cuadro" id="nueve"></div>
+            <button id="cerrarSesion" class="boton">Cerrar Sesión</button>
+
+        </div>
+        <div id="jugador2">
+            <h1>Jugador #2</h1>
+            <p id="mensajeBienvenida2"></p>
+
+        </div>
+    </div>
+</body>
+<script>
+    const mensajeBienvenida1 = document.querySelector("#mensajeBienvenida1");
+    const mensajeBienvenida2 = document.querySelector("#mensajeBienvenida2");
+    const turno1 = document.getElementById("jugador1")
+    const turno2 = document.getElementById("jugador2")
+    const botones = {
+        celdas: document.querySelectorAll(".cuadro")
+    }
+
+    const combinacionesGanadoras = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+    let usuario1 = sessionStorage.getItem("usuarioActual_#1");
+    let usuario2 = sessionStorage.getItem("usuarioActual_#2");
+    let paginaAnterior = sessionStorage.getItem("paginaAnterior");
+
+    if (paginaAnterior == null) {
+        paginaAnterior = "index.html"
+    }
+
+    if ((usuario1) && (usuario2)) {
+        // Si hay usuario
+        mensajeBienvenida1.textContent = `${usuario1}`
+        mensajeBienvenida2.textContent = `${usuario2}`
+    }
+
+    document.getElementById("cerrarSesion").addEventListener("click", () => {
+        sessionStorage.removeItem("UsuarioActual_#1");
+        sessionStorage.removeItem("UsuarioActual_#1");
+        document.getElementById("cerrarSesion").textContent =
+            "Sesion eliminada volvera a inicio en 2 segundos";
+        sleep(2000).then(() => window.location.href = paginaAnterior)
+    })
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+    function verificarGanador (){
+        for (let combinacion of combinacionesGanadoras) {
+            const [a, b , c] = combinacion
+            const A = botones.celdas[a].textContent
+            const B = botones.celdas[b].textContent
+            const C = botones.celdas[c].textContent
+
+            if (A !== "" && A === B && A === C) {
+                return A
+            }
+        }
+        return null
+        
+    }
+    let contador = 0
+
+    botones.celdas.forEach(boton => {
+        boton.addEventListener("click", (evento) => {
+            if (evento.target.textContent !== "") {
+                return;
+            }
+            contador++;
+            if (contador % 2 == 0) {
+                turno1.style.border = "solid 2px black"
+                turno2.style.border = ""
+                evento.target.textContent = "o"
+            } else {
+                turno2.style.border = "solid 2px black"
+                turno1.style.border = "hidden"
+                evento.target.textContent = "x"
+            }
+            const ganador = verificarGanador()
+            if (ganador) {
+                let jugadorGanador = ganador === "x" ? usuario1 : usuario2
+                setTimeout(()=> {
+                    alert(`Jugador ${jugadorGanador} ha ganado el juego`)
+                    location.reload()
+                }, 100)
+            }
+        })
+    })
+
+</script>
+
+</html>
